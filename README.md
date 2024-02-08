@@ -36,10 +36,6 @@ Refer to this blog [blog post](https://oxylabs.io/blog/how-to-scrape-google-jobs
 
 Once you visit the Google Jobs page, you'll see that all job listings for a query are displayed on the left side. Looking at the HTML structure, you can see that each listing is enclosed in the ```<li>``` tag and collectively wrapped within the ```<ul>``` tag:
 
-Scrape Google Jobs
-Make another 
-[image]
-
 In this guide, let’s scrape Google Jobs results asynchronously and extract the following publicly available data:
 
 1. Job title
@@ -48,8 +44,6 @@ In this guide, let’s scrape Google Jobs results asynchronously and extract the
 4. Job posted via *[platform]*
 5. Job listing date
 6. Salary
-
-[image] 
 
 If you want to extract even more public data, such as job highlights, job description, and similar jobs, expand the code shown in this article to make additional API calls to the scraped job URLs.
 
@@ -164,11 +158,9 @@ payload = {
 
 Next, use [Custom Parser](https://developers.oxylabs.io/scraper-apis/custom-parser?_gl=1*ugfwm0*_gcl_au*MTcyMDU1MDYxNi4xNzA3MzkxNjU5) to define your own parsing logic with xPath or CSS selectors and retrieve only the data you need. Remember that you can create as many functions as you want and extract even more data points than shown in this guide. Head to this Google Jobs URL in your browser and open Developer Tools by pressing Ctrl+Shift+I (Windows) or Option + Command + I (macOS). Use Ctrl+F or Command+F to open a search bar and test selector expressions.
 
-As mentioned previously, the job listings are within the <li> tags, which are wrapped with the <ul> tag:
+As mentioned previously, the job listings are within the <li> tags, which are wrapped with the <ul> tag. 
 
-[image]
-
-As there is more than one ```<ul>``` list on the Google Jobs page, you can form an xPath selector by specifying the ```div``` element that contains the targeted list:
+As there is more than one ```<ul>``` list on the Google Jobs page, you can form an xPath selector by specifying the ```div``` element that contains the targeted list.
 
 ```//div[@class='nJXhWc']//ul/li```
 
@@ -240,15 +232,11 @@ For each data point, you can create a separate function within the ```_items``` 
 
 ### Job title
 
-[image]
-
 ```
 .//div[@class='BjJfJf PUpOsf']/text()
 ```
 
 ### Company name
-
-[image]
 
 ```
 .//div[@class='vNEEBe']/text()
@@ -256,15 +244,12 @@ For each data point, you can create a separate function within the ```_items``` 
 
 ### Location
 
-[image]
-
 ```
 .//div[@class='Qk80Jf'][1]/text()
 ```
 
 ### Date
 
-[image]
 
 ```
 .//div[@class='PuiEXc']//span[@class='LL4CDc' and contains(@aria-label, 'Posted')]/span/text()
@@ -272,23 +257,17 @@ For each data point, you can create a separate function within the ```_items``` 
 
 ### Salary
 
-[image]
-
 ```
 .//div[@class='PuiEXc']//div[@class='I2Cbhb bSuYSc']//span[@aria-hidden='true']/text()
 ```
 
 ### Job posted via
 
-[image]
-
 ```
 .//div[@class='Qk80Jf'][2]/text()
 ```
 
 ### URL
-
-[image]
 
 ```
 .//div[@data-share-url]/@data-share-url
