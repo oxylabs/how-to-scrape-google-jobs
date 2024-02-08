@@ -107,19 +107,235 @@ Visit our [documentation](https://developers.oxylabs.io/scraper-apis/serp-scrape
 
 ### 5. Prepare the API payload with parsing instructions
 
-Google Jobs Scraper API takes web scraping instructions from a ```payload``` dictionary, making it the most important configuration to fine-tune. The ```url``` and ```geo_location``` keys are set to None, as the scraper will pass these values dynamically for each search query and location. The "render": "html" parameter enables JavaScript rendering and returns the rendered HTML file:
+Google Jobs Scraper API takes web scraping instructions from a ```payload``` dictionary, making it the most important configuration to fine-tune. The ```url``` and ```geo_location``` keys are set to ```None```, as the scraper will pass these values dynamically for each search query and location. The ```"render": "html"``` parameter enables JavaScript rendering and returns the rendered HTML file:
 
+```payload = {
+    "source": "google",
+    "url": None,
+    "geo_location": None,
+    "user_agent_type": "desktop",
+    "render": "html"
+}
+```
 
+Next, use [Custom Parser](https://developers.oxylabs.io/scraper-apis/custom-parser?_gl=1*ugfwm0*_gcl_au*MTcyMDU1MDYxNi4xNzA3MzkxNjU5) to define your own parsing logic with xPath or CSS selectors and retrieve only the data you need. Remember that you can create as many functions as you want and extract even more data points than shown in this guide. Head to this Google Jobs URL in your browser and open Developer Tools by pressing Ctrl+Shift+I (Windows) or Option + Command + I (macOS). Use Ctrl+F or Command+F to open a search bar and test selector expressions.
 
+As mentioned previously, the job listings are within the <li> tags, which are wrapped with the <ul> tag:
 
+[image]
 
+As there is more than one ```<ul>``` list on the Google Jobs page, you can form an xPath selector by specifying the ```div``` element that contains the targeted list:
 
+```//div[@class='nJXhWc']//ul/li```
 
+You can use this selector to specify the location of all job listings in the HTML file. In the ```payload``` dictionary, set the ```parse``` key to ```True``` and create the ```parsing_instructions``` parameter with the jobs function:
 
+```payload = {
+    "source": "google",
+    "url": None,
+    "geo_location": None,
+    "user_agent_type": "desktop",
+    "render": "html",
+    "parse": True,
+    "parsing_instructions": {
+        "jobs": {
+            "_fns": [
+                {
+                    "_fn": "xpath",
+                    "_args": ["//div[@class='nJXhWc']//ul/li"]
+                }
+            ],
+        }
+    }
+}
+```
 
+Next, create the _items iterator that will loop over the jobs list and extract details for each listing:
 
+```payload = {
+    "source": "google",
+    "url": None,
+    "geo_location": None,
+    "user_agent_type": "desktop",
+    "render": "html",
+    "parse": True,
+    "parsing_instructions": {
+        "jobs": {
+            "_fns": [
+                {
+                    "_fn": "xpath", # You can use CSS or xPath
+                    "_args": ["//div[@class='nJXhWc']//ul/li"]
+                }
+            ],
+            "_items": {
+                "data_point_1": {
+                    "_fns": [
+                        {
+                            "_fn": "selector_type",  # You can use CSS or xPath
+                            "_args": ["selector"]
+                        }
+                    ]
+                },
+                "data_point_2": {
+                    "_fns": [
+                        {
+                            "_fn": "selector_type",
+                            "_args": ["selector"]
+                        }
+                    ]
+                },
+            }
+        }
+    }
+}
+```
 
+For each data point, you can create a separate function within the ```_items``` iterator. Let’s see how xPath selectors should look like for each Google Jobs data point:
 
+### Job title
+
+[image]
+
+```.//div[@class='BjJfJf PUpOsf']/text()```
+
+### Company name
+
+[image]
+
+```.//div[@class='vNEEBe']/text()```
+
+### Location
+
+[image]
+
+```.//div[@class='Qk80Jf'][1]/text()```
+
+### Date
+
+[image]
+
+```.//div[@class='PuiEXc']//span[@class='LL4CDc' and contains(@aria-label, 'Posted')]/span/text()```
+
+### Salary
+
+[image]
+
+```.//div[@class='PuiEXc']//div[@class='I2Cbhb bSuYSc']//span[@aria-hidden='true']/text()```
+
+### Job posted via
+
+[image]
+
+```.//div[@class='Qk80Jf'][2]/text()```
+
+### URL
+
+[image]
+
+```.//div[@data-share-url]/@data-share-url```
+
+**Please be aware** that you can only access this job listing URL in your browser with an IP address from the same country used during web scraping. If you’ve used a United States proxy, make sure to use a US IP address in your browser.
+
+In the end, you should have a ```payload``` that looks like shown below. Save it to a separate JSON file and ensure that the ```None``` and ```True``` parameter values are converted to respective JSON values: ```null``` and ```true```:
+
+```import json
+
+payload = {
+    "source": "google",
+    "url": None,
+    "geo_location": None,
+    "user_agent_type": "desktop",
+    "render": "html",
+    "parse": True,
+    "parsing_instructions": {
+        "jobs": {
+            "_fns": [
+                {
+                    "_fn": "xpath",
+                    "_args": ["//div[@class='nJXhWc']//ul/li"]
+                }
+            ],
+            "_items": {
+                "job_title": {
+                    "_fns": [
+                        {
+                            "_fn": "xpath_one",
+                            "_args": [".//div[@class='BjJfJf PUpOsf']/text()"]
+                        }
+                    ]
+                },
+                "company_name": {
+                    "_fns": [
+                        {
+                            "_fn": "xpath_one",
+                            "_args": [".//div[@class='vNEEBe']/text()"]
+                        }
+                    ]
+                },
+                "location": {
+                    "_fns": [
+                        {
+                            "_fn": "xpath_one",
+                            "_args": [".//div[@class='Qk80Jf'][1]/text()"]
+                        }
+                    ]
+                },
+                "date": {
+                    "_fns": [
+                        {
+                            "_fn": "xpath_one",
+                            "_args": [".//div[@class='PuiEXc']//span[@class='LL4CDc' and contains(@aria-label, 'Posted')]/span/text()"]
+                        }
+                    ]
+                },
+                "salary": {
+                    "_fns": [
+                        {
+                            "_fn": "xpath_one",
+                            "_args": [".//div[@class='PuiEXc']//div[@class='I2Cbhb bSuYSc']//span[@aria-hidden='true']/text()"]
+                        }
+                    ]
+                },
+                "posted_via": {
+                    "_fns": [
+                        {
+                            "_fn": "xpath_one",
+                            "_args": [".//div[@class='Qk80Jf'][2]/text()"]
+                        }
+                    ]
+                },
+                "URL": {
+                    "_fns": [
+                        {
+                            "_fn": "xpath_one",
+                            "_args": [".//div[@data-share-url]/@data-share-url"]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+
+with open("payload.json", "w") as f:
+    json.dump(payload, f, indent=4)
+```
+
+This allows you to import the payload and make the scraper code much shorter:
+
+```payload = {}
+with open("payload.json", "r") as f:
+    payload = json.load(f)
+```
+
+### 6. Define functions 
+
+There are several ways you can [integrate](https://developers.oxylabs.io/scraper-apis/getting-started/integration-methods?_gl=1*bftxvn*_gcl_au*MTcyMDU1MDYxNi4xNzA3MzkxNjU5) Oxylabs Scraper APIs, namely Realtime, [Push-Pull](https://developers.oxylabs.io/scraper-apis/getting-started/integration-methods/push-pull?_gl=1*1lxuuik*_gcl_au*MTcyMDU1MDYxNi4xNzA3MzkxNjU5), and Proxy endpoint. For this guide, let’s use [Push-Pull](https://developers.oxylabs.io/scraper-apis/getting-started/integration-methods/push-pull?_gl=1*1j36jm8*_gcl_au*MTcyMDU1MDYxNi4xNzA3MzkxNjU5#batch-query), as you won’t have to keep your connection open after submitting a scraping job to the API. The API endpoint to use in this scenario is https://data.oxylabs.io/v1/queries.
+
+You could also use another endpoint to submit batches of up to 1000 URLs or queries. Keep in mind that making this choice will require you to modify the code shown in this tutorial. Read up about batch queries in our documentation.
+
+#### Submit job
+Define an async function called submit_job and pass the session: ClientSession together with the payload to submit a web scraping job to the Oxylabs API using the POST method. This will return the ID number of the submitted job:
 
 
 
