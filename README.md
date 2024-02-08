@@ -51,7 +51,7 @@ If you want to extract even more public data, such as job highlights, job descri
 Visit the Oxylabs dashboard and create an account to claim your 1-week free trial for Google Jobs API, which is part of Oxylabs’ SERP Scraper API. It’s equipped with proxy servers, Headless Browser, Custom Parser, and other advanced features that’ll help you overcome blocks and fingerprinting. See this short guide that shows how to navigate the dashboard and get the free trial.
 
 ### Install Python
-If you don’t have Python installed yet, you can download it from the official Python website. This tutorial is written with Python 3.12.0, so ensure that you have a compatible version.</p>
+If you don’t have Python installed yet, you can download it from the official Python website. This tutorial is written with Python 3.12.0, so ensure that you have a compatible version.
 
 ### Send a request for testing
 After creating an API user, copy and save your API user credentials, which you’ll use for authentication. Next, open your terminal and install the requests library:
@@ -84,7 +84,7 @@ Once it finishes running, you should see a JSON response with HTML results and a
 
 ## 2. Install and import libraries
 
-For this project, let’s use the asyncio and aiohttp libraries to make asynchronous requests to the API. Additionally, the json and pandas libraries will help you deal with JSON and CSV files. 
+For this project, let’s use the ```asyncio``` and ```aiohttp``` libraries to make asynchronous requests to the API. Additionally, the ```json``` and ```pandas``` libraries will help you deal with JSON and CSV files. 
 
 Open your terminal and run the following command to install the necessary libraries:
 
@@ -100,7 +100,7 @@ from aiohttp import ClientSession, BasicAuth
 
 ## 3. Add your API user credentials
 
-Create the API user ```credentials``` variable and use ```BasicAuth```, as aiohttp requires this for authentication:
+Create the API user ```credentials``` variable and use ```BasicAuth```, as ```aiohttp``` requires this for authentication:
 
 ```
 credentials = BasicAuth("USERNAME", "PASSWORD") # Replace with your API user credentials
@@ -118,7 +118,7 @@ This enables you to scrape job listings for as many search queries as you want.
 
 **Note** that the ```q=```, ```ibp=htl;jobs```, ```hl=```, and ```gl=``` parameters are mandatory for the URL to work.
 
-Additionally, you could set the UULE parameter for geo-location targeting yourself, but that’s unnecessary since the geo_location parameter of Google Jobs Scraper API does that by default.
+Additionally, you could set the UULE parameter for geo-location targeting yourself, but that’s unnecessary since the ```geo_location``` parameter of Google Jobs Scraper API does that by default.
 
 ### URL parameters
 
@@ -156,7 +156,7 @@ payload = {
 }
 ```
 
-Next, use [Custom Parser](https://developers.oxylabs.io/scraper-apis/custom-parser?_gl=1*ugfwm0*_gcl_au*MTcyMDU1MDYxNi4xNzA3MzkxNjU5) to define your own parsing logic with xPath or CSS selectors and retrieve only the data you need. Remember that you can create as many functions as you want and extract even more data points than shown in this guide. Head to this Google Jobs URL in your browser and open Developer Tools by pressing Ctrl+Shift+I (Windows) or Option + Command + I (macOS). Use Ctrl+F or Command+F to open a search bar and test selector expressions.
+Next, use [Custom Parser](https://developers.oxylabs.io/scraper-apis/custom-parser?_gl=1*ugfwm0*_gcl_au*MTcyMDU1MDYxNi4xNzA3MzkxNjU5) to define your own parsing logic with ```xPath``` or ```CSS``` selectors and retrieve only the data you need. Remember that you can create as many functions as you want and extract even more data points than shown in this guide. Head to this Google Jobs URL in your browser and open Developer Tools by pressing Ctrl+Shift+I (Windows) or Option + Command + I (macOS). Use Ctrl+F or Command+F to open a search bar and test selector expressions.
 
 As mentioned previously, the job listings are within the <li> tags, which are wrapped with the <ul> tag. 
 
@@ -187,7 +187,7 @@ payload = {
 }
 ```
 
-Next, create the _items iterator that will loop over the jobs list and extract details for each listing:
+Next, create the ```_items``` iterator that will loop over the jobs list and extract details for each listing:
 
 ```
 payload = {
@@ -228,7 +228,7 @@ payload = {
 }
 ```
 
-For each data point, you can create a separate function within the ```_items``` iterator. Let’s see how xPath selectors should look like for each Google Jobs data point:
+For each data point, you can create a separate function within the ```_items``` iterator. Let’s see how ```xPath``` selectors should look like for each Google Jobs data point:
 
 ### Job title
 
@@ -408,7 +408,7 @@ async def get_job_results(session: ClientSession, job_id):
 ```
 ### Save data to a CSV file
 
-Define another ```async``` function that saves the scraped and parsed data to a CSV file. Later on, we’ll create the four parameters that are passed to the function. As the pandas library is synchronous, you must use ```asyncio.to_thread()``` to run the ```df.to_csv``` asynchronously in a separate thread:
+Define another ```async``` function that saves the scraped and parsed data to a CSV file. Later on, we’ll create the four parameters that are passed to the function. As the ```pandas``` library is synchronous, you must use ```asyncio.to_thread()``` to run the ```df.to_csv``` asynchronously in a separate thread:
 
 ```
 async def save_to_csv(job_id, query, location, results):
