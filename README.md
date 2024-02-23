@@ -29,7 +29,7 @@ Refer to this blog [blog post](https://oxylabs.io/blog/how-to-scrape-google-jobs
     + [Get job results](#get-job-results)
     + [Save data to a CSV file](#save-data-to-a-csv-file)
     + [Scrape Google Jobs](#scrape-google-jobs)
-  * [7. Create the main() function](#7-create-the-main---function)
+  * [7. Create the main() function](#7-create-the-main()-function)
   * [8. Run the complete code](#8-run-the-complete-code)
 
 ## Google Jobs website overview
@@ -56,13 +56,13 @@ If you don’t have Python installed yet, you can download it from the official 
 ### Send a request for testing
 After creating an API user, copy and save your API user credentials, which you’ll use for authentication. Next, open your terminal and install the requests library:
 
-```
+```bash
 pip install requests
 ```
 
 Then run the following code that scrapes Google Jobs results and retrieves the entire HTML file:
 
-```
+```python
 import requests
 
 payload = {
@@ -88,13 +88,14 @@ For this project, let’s use the ```asyncio``` and ```aiohttp``` libraries to m
 
 Open your terminal and run the following command to install the necessary libraries:
 
-```
+```bash
 pip install asyncio aiohttp pandas
 ```
 
 Then, import them into your Python file:
 
-```import asyncio, aiohttp, json, pandas as pd
+```python
+import asyncio, aiohttp, json, pandas as pd
 from aiohttp import ClientSession, BasicAuth
 ```
 
@@ -102,7 +103,7 @@ from aiohttp import ClientSession, BasicAuth
 
 Create the API user ```credentials``` variable and use ```BasicAuth```, as ```aiohttp``` requires this for authentication:
 
-```
+```python
 credentials = BasicAuth("USERNAME", "PASSWORD") # Replace with your API user credentials
 ```
 
@@ -124,7 +125,7 @@ Additionally, you could set the UULE parameter for geo-location targeting yourse
 
 Create the URL_parameters list to store your search queries:
 
-```
+```python
 URL_parameters = ["developer", "chef", "manager"]
 ``` 
 
@@ -132,7 +133,7 @@ URL_parameters = ["developer", "chef", "manager"]
 
 Then, create the ```locations``` dictionary where the key refers to the country, and the value is a list of geo-location parameters. This dictionary will be used to dynamically form the API payload and localize Google Jobs results for the specified location. The two-letter country code will be used to modify the ```gl=``` parameter in the Google Jobs URL:
 
-```
+```python
 locations = {
     "US": ["California,United States", "Virginia,United States", "New York,United States"],
     "GB": ["United Kingdom"],
@@ -146,7 +147,7 @@ Visit our [documentation](https://developers.oxylabs.io/scraper-apis/serp-scrape
 
 Google Jobs Scraper API takes web scraping instructions from a ```payload``` dictionary, making it the most important configuration to fine-tune. The ```url``` and ```geo_location``` keys are set to ```None```, as the scraper will pass these values dynamically for each search query and location. The ```"render": "html"``` parameter enables JavaScript rendering and returns the rendered HTML file:
 
-```
+```python
 payload = {
     "source": "google",
     "url": None,
@@ -166,7 +167,7 @@ As there is more than one ```<ul>``` list on the Google Jobs page, you can form 
 
 You can use this selector to specify the location of all job listings in the HTML file. In the ```payload``` dictionary, set the ```parse``` key to ```True``` and create the ```parsing_instructions``` parameter with the jobs function:
 
-```
+```python
 payload = {
     "source": "google",
     "url": None,
@@ -189,7 +190,7 @@ payload = {
 
 Next, create the ```_items``` iterator that will loop over the jobs list and extract details for each listing:
 
-```
+```python
 payload = {
     "source": "google",
     "url": None,
@@ -277,7 +278,7 @@ For each data point, you can create a separate function within the ```_items``` 
 
 In the end, you should have a ```payload``` that looks like shown below. Save it to a separate JSON file and ensure that the ```None``` and ```True``` parameter values are converted to respective JSON values: ```null``` and ```true```:
 
-```
+```python
 import json
 
 payload = {
@@ -363,7 +364,7 @@ with open("payload.json", "w") as f:
 
 This allows you to import the payload and make the scraper code much shorter:
 
-```
+```python
 payload = {}
 with open("payload.json", "r") as f:
     payload = json.load(f)
@@ -378,7 +379,7 @@ You could also use another endpoint to submit batches of up to 1000 URLs or quer
 ### Submit job
 Define an ```async``` function called ```submit_job``` and pass the ```session: ClientSession``` together with the ```payload``` to submit a web scraping job to the Oxylabs API using the ```POST``` method. This will return the ID number of the submitted job:
 
-```
+```python
 async def submit_job(session: ClientSession, payload):
     async with session.post(
         "https://data.oxylabs.io/v1/queries",
@@ -392,7 +393,7 @@ async def submit_job(session: ClientSession, payload):
 
 Then, create another ```async``` function that passes the ```job_id``` (this will be defined later) and returns the ```status``` of the scraping job from the response:
 
-```
+```python
 async def check_job_status(session: ClientSession, job_id):
     async with session.get(f"https://data.oxylabs.io/v1/queries/{job_id}", auth=credentials) as response:
         return (await response.json())["status"]
@@ -401,7 +402,7 @@ async def check_job_status(session: ClientSession, job_id):
 ### Get job results
 Next, create an ```async``` function that retrieves the scraped and parsed jobs results. Note that the response is a JSON string that contains the API job details and the scraped content that you can access by parsing nested JSON properties:
 
-```
+```python
 async def get_job_results(session: ClientSession, job_id):
     async with session.get(f"https://data.oxylabs.io/v1/queries/{job_id}/results", auth=credentials) as response:
         return (await response.json())["results"][0]["content"]["jobs"]
@@ -410,7 +411,7 @@ async def get_job_results(session: ClientSession, job_id):
 
 Define another ```async``` function that saves the scraped and parsed data to a CSV file. Later on, we’ll create the four parameters that are passed to the function. As the ```pandas``` library is synchronous, you must use ```asyncio.to_thread()``` to run the ```df.to_csv``` asynchronously in a separate thread:
 
-```
+```python
 async def save_to_csv(job_id, query, location, results):
     print(f"Saving data for {job_id}")
     data = []
@@ -434,7 +435,7 @@ async def save_to_csv(job_id, query, location, results):
 
 Make another ```async``` function that passes parameters to form the Google Jobs ```URL``` and the payload dynamically. Create a variable ```job_id``` and then call the ```submit_job``` function to submit the request to the API and create a ```while True``` loop by calling the ```check_job_status``` function to keep checking whether the API has finished web scraping. At the end, initiate the ```get_job_results``` and ```save_to_csv``` functions:
 
-```
+```python
 async def scrape_jobs(session: ClientSession, query, country_code, location):
     URL = f"https://www.google.com/search?q={query}&ibp=htl;jobs&hl=en&gl={country_code}"
 
@@ -466,7 +467,8 @@ async def scrape_jobs(session: ClientSession, query, country_code, location):
 
 You’ve written most of the code, what’s left is to pull everything together by defining an ```async``` function called ```main()``` that creates an ```aiohttp session```. It makes a list of tasks to scrape jobs for each combination of ```location``` and ```query``` and executes each task concurrently using ```asyncio.gather()```:
 
-```async def main():
+```python
+async def main():
     async with aiohttp.ClientSession() as session:
         tasks = []
 
@@ -481,7 +483,7 @@ You’ve written most of the code, what’s left is to pull everything together 
 
 If you run into an SSL certificate verification failure, you can bypass SSL by using the ```TCPConnector```:
 
-```
+```python
 async def main():
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
 	# Remaining code...
@@ -489,7 +491,7 @@ async def main():
 
 Lastly, initialize the event loop and call the ```main()``` function:
 
-```
+```python
 if __name__ == "__main__":
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
@@ -499,7 +501,7 @@ if __name__ == "__main__":
 ## 8. Run the complete code
 Here’s the full Python code that scrapes Google Jobs listings for each query and location asynchronously:
 
-```
+```python
 import asyncio, aiohttp, json, pandas as pd
 from aiohttp import ClientSession, BasicAuth
 
