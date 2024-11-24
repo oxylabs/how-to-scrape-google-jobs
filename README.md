@@ -6,6 +6,12 @@ Learn how to build your own Google Jobs scraper that simultaneously scrapes Goog
 
 Refer to this blog [blog post](https://oxylabs.io/blog/how-to-scrape-google-jobs) for a full guide featuring detailed insights and images.
 
+  * [Free Google Shoppping Scraper](#free-google-shoppping-scraper)
+    + [Prerequisites](#prerequisites)
+    + [Installation](#installation)
+    + [Scraping Google Jobs](#scraping-google-jobs)
+    + [Notes](#notes)
+  * [Scraping Google Jobs with Oxylabs API](#scraping-google-jobs-with-oxylabs-api)
   * [Google Jobs website overview](#google-jobs-website-overview)
   * [1. Get a free trial and send a request](#1-get-a-free-trial-and-send-a-request)
     + [Install Python](#install-python)
@@ -32,6 +38,58 @@ Refer to this blog [blog post](https://oxylabs.io/blog/how-to-scrape-google-jobs
   * [7. Create the main() function](#7-create-the-main()-function)
   * [8. Run the complete code](#8-run-the-complete-code)
 
+
+
+## Free Google Jobs Scraper
+
+A free tool used to get data about jobs from Google Jobs for a provided search query.
+
+### Prerequisites
+
+To run this tool, you need to have Python 3.11 installed in your system.
+
+### Installation
+
+Open up a terminal window, navigate to this repository and run this command:
+
+```make install```
+
+### Scraping Google Jobs
+
+To scrape jobs from Google Jobs, simply run this command in your terminal with a search query for a job that you need data for:
+
+```make scrape QUERY="<job_query>"```
+
+For this example, let's try scraping for designer jobs. The command should look something like this:
+
+```make scrape QUERY="designer"```
+
+Make sure to enclose your query in quotation marks, otherwise the tool might have trouble parsing it.
+
+After running the command, your terminal should look something like this:
+
+<img width="701" alt="image" src="https://github.com/user-attachments/assets/7958807d-c30b-44fc-bb0a-cd3140ceb7d8">
+
+After the tool has finished running, you should see a file named `jobs.csv` in your current directory.
+
+The CSV file contains available jobs in your area for the position you entered in the query. 
+The jobs are listed with these attributes:
+
+- `title` - The title of position.
+- `company` - The name of the company.
+- `location` - The location of the position.
+- `url` - The URL of the Google Jobs page for that job.
+
+Here's an example of how the data can look like:
+
+<img width="854" alt="image" src="https://github.com/user-attachments/assets/cfdb3e6e-c57f-46ba-943c-6f58c0e8e9c2">
+
+### Notes
+
+In case the code doesn't work or your project is of bigger scale, please refer to the second part of the tutorial. There, we showcase how to scrape public data with Oxylabs API.
+
+## Scraping Google Jobs with Oxylabs API
+
 ## Google Jobs website overview
 
 Once you visit the Google Jobs page, you'll see that all job listings for a query are displayed on the left side. Looking at the HTML structure, you can see that each listing is enclosed in the ```<li>``` tag and collectively wrapped within the ```<ul>``` tag:
@@ -47,7 +105,7 @@ In this guide, let’s scrape Google Jobs results asynchronously and extract the
 
 If you want to extract even more public data, such as job highlights, job description, and similar jobs, expand the code shown in this article to make additional API calls to the scraped job URLs.
 
-## 1. Get a free trial and send a request
+### 1. Get a free trial and send a request
 Visit the Oxylabs dashboard and create an account to claim your 1-week free trial for Google Jobs API. It’s equipped with proxy servers, Headless Browser, Custom Parser, and other advanced features that’ll help you overcome blocks and fingerprinting. See this short guide that shows how to navigate the dashboard and get the free trial.
 
 ### Install Python
