@@ -2,11 +2,9 @@
 
 [![Oxylabs promo code](https://user-images.githubusercontent.com/129506779/250792357-8289e25e-9c36-4dc0-a5e2-2706db797bb5.png)](https://oxylabs.go2cloud.org/aff_c?offer_id=7&aff_id=877&url_id=112)
 
-Learn how to build your own Google Jobs scraper that simultaneously scrapes Google Jobs for multiple search queries and geo-locations with Python and [Oxylabs’ Google Jobs Scraper API](https://oxylabs.io/products/scraper-api/serp/google/jobs) (a part of Web Scraper API).
+In this two-part tutorial, we're going to show how to scrape Google Jobs data. First, we'll show how to do it for free but if you need data at scale, please refer to the second part of the tutorial. There, we'll demonstrate how to gather large-scale data with Oxylabs API. 
 
-Refer to this blog [blog post](https://oxylabs.io/blog/how-to-scrape-google-jobs) for a full guide featuring detailed insights and images.
-
-  * [Free Google Shoppping Scraper](#free-google-shoppping-scraper)
+  * [Free Google Jobs Scraper](#free-google-jobs-scraper)
     + [Prerequisites](#prerequisites)
     + [Installation](#installation)
     + [Scraping Google Jobs](#scraping-google-jobs)
@@ -35,10 +33,8 @@ Refer to this blog [blog post](https://oxylabs.io/blog/how-to-scrape-google-jobs
     + [Get job results](#get-job-results)
     + [Save data to a CSV file](#save-data-to-a-csv-file)
     + [Scrape Google Jobs](#scrape-google-jobs)
-  * [7. Create the main() function](#7-create-the-main()-function)
+  * [7. Create the main() function](#7-create-the-main-function)
   * [8. Run the complete code](#8-run-the-complete-code)
-
-
 
 ## Free Google Jobs Scraper
 
@@ -665,4 +661,5 @@ if __name__ == "__main__":
 
 After the scraper finishes running, you’ll see all the CSV files saved in your local directory.
 
-Read More Google Scraping Related Repositories: [Google Sheets for Basic Web Scraping](https://github.com/oxylabs/web-scraping-google-sheets), [How to Scrape Google Shopping Results](https://github.com/oxylabs/scrape-google-shopping), [Google Play Scraper](https://github.com/oxylabs/google-play-scraper), [Google News Scrpaer](https://github.com/oxylabs/google-news-scraper), [How to Scrape Google Scholar](https://github.com/oxylabs/how-to-scrape-google-scholar), [How to Scrape Google Flights with Python](https://github.com/oxylabs/how-to-scrape-google-flights), [How To Scrape Google Images](https://github.com/oxylabs/how-to-scrape-google-images), [Scrape Google Search Results](https://github.com/oxylabs/scrape-google-python), [Scrape Google Trends](https://github.com/oxylabs/how-to-scrape-google-trends)
+Refer to this blog [blog post](https://oxylabs.io/blog/how-to-scrape-google-jobs) for a full guide featuring detailed insights and images.
+
