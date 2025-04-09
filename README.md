@@ -2,6 +2,8 @@
 
 [![Oxylabs promo code](https://raw.githubusercontent.com/oxylabs/how-to-scrape-google-scholar/refs/heads/main/Google-Scraper-API-1090x275.png)](https://oxylabs.go2cloud.org/aff_c?offer_id=7&aff_id=877&url_id=112)
 
+[![](https://dcbadge.vercel.app/api/server/eWsVUJrnG5)](https://discord.gg/Pds3gBmKMH)
+
 In this two-part tutorial, we're going to show how to scrape Google Jobs data. First, we'll show how to do it for free but if you need data at scale, please refer to the second part of the tutorial. There, we'll demonstrate how to gather large-scale data with Oxylabs API. 
 
   * [Free Google Jobs Scraper](#free-google-jobs-scraper)
