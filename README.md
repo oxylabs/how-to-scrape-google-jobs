@@ -104,7 +104,7 @@ In this guide, let’s scrape Google Jobs results asynchronously and extract the
 If you want to extract even more public data, such as job highlights, job description, and similar jobs, expand the code shown in this article to make additional API calls to the scraped job URLs.
 
 ### 1. Get a free trial and send a request
-Visit the Oxylabs dashboard and create an account to claim your 1-week free trial for Google Jobs API. It’s equipped with proxy servers, Headless Browser, Custom Parser, and other advanced features that’ll help you overcome blocks and fingerprinting. See this short guide that shows how to navigate the dashboard and get the free trial.
+Visit the Oxylabs dashboard and create an account to claim your 1-week free trial for Google Jobs API, part of the Oxylabs Web Scraper API. It’s equipped with proxy servers, Custom Browser Instructions, Custom Parser, and other advanced features that’ll help you overcome blocks and fingerprinting. See this short guide that shows how to navigate the dashboard and get the free trial.
 
 ### Install Python
 If you don’t have Python installed yet, you can download it from the official Python website. This tutorial is written with Python 3.12.0, so ensure that you have a compatible version.
