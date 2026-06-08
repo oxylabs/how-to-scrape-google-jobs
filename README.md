@@ -537,7 +537,7 @@ async def main():
         await asyncio.gather(*tasks)
 ```
 
-If you run into an SSL certificate verification failure, you can bypass SSL by using the ```TCPConnector```:
+If you run into an SSL certificate verification failure, you can manage SSL by using the ```TCPConnector```:
 
 ```python
 async def main():
