@@ -197,7 +197,7 @@ locations = {
 }
 ```
 
-Visit our [documentation](https://developers.oxylabs.io/scraper-apis/web-scraper-api/features/geo-location#google) for more details about geo-locations.
+Visit our [documentation](https://developers.oxylabs.io/products/web-scraper-api/features/localization/serp-localization) for more details about geo-locations.
 
 ## 5. Prepare the API payload with parsing instructions
 
@@ -213,7 +213,7 @@ payload = {
 }
 ```
 
-Next, use [Custom Parser](https://developers.oxylabs.io/scraper-apis/web-scraper-api/features/custom-parser) to define your own parsing logic with ```xPath``` or ```CSS``` selectors and retrieve only the data you need. Remember that you can create as many functions as you want and extract even more data points than shown in this guide. Head to this Google Jobs URL in your browser and open Developer Tools by pressing Ctrl+Shift+I (Windows) or Option + Command + I (macOS). Use Ctrl+F or Command+F to open a search bar and test selector expressions.
+Next, use [Custom Parser](https://developers.oxylabs.io/products/web-scraper-api/features/custom-parser) to define your own parsing logic with ```xPath``` or ```CSS``` selectors and retrieve only the data you need. Remember that you can create as many functions as you want and extract even more data points than shown in this guide. Head to this Google Jobs URL in your browser and open Developer Tools by pressing Ctrl+Shift+I (Windows) or Option + Command + I (macOS). Use Ctrl+F or Command+F to open a search bar and test selector expressions.
 
 As mentioned previously, the job listings are within the <li> tags, which are wrapped with the <ul> tag. 
 
@@ -428,7 +428,7 @@ with open("payload.json", "r") as f:
 
 ## 6. Define functions 
 
-There are several ways you can [integrate](https://developers.oxylabs.io/scraper-apis/web-scraper-api/integration-methods) Oxylabs API, namely Realtime, [Push-Pull](https://developers.oxylabs.io/scraper-apis/web-scraper-api/integration-methods/push-pull) (supports [batch requests](https://developers.oxylabs.io/scraper-apis/web-scraper-api/integration-methods/push-pull-batch)), and Proxy endpoint. For this guide, let’s use Push-Pull with batch requests, as you won’t have to keep your connection open after submitting a scraping job to the API. The API endpoint to use in this scenario is https://data.oxylabs.io/v1/queries.
+There are several ways you can [integrate](https://developers.oxylabs.io/products/web-scraper-api/integration-methods) Oxylabs API, namely Realtime, [Push-Pull](https://developers.oxylabs.io/products/web-scraper-api/integration-methods/push-pull) (supports [batch requests](https://developers.oxylabs.io/products/web-scraper-api/integration-methods/push-pull#batch-query)), and Proxy endpoint. For this guide, let’s use Push-Pull with batch requests, as you won’t have to keep your connection open after submitting a scraping job to the API. The API endpoint to use in this scenario is https://data.oxylabs.io/v1/queries.
 
 You could also use another endpoint to submit batches of up to 5000 URLs or queries. Keep in mind that making this choice will require you to modify the code shown in this tutorial. Read up about batch queries in our documentation.
 
